@@ -2,7 +2,7 @@ import os
 
 def get_database_url():
     url = os.environ.get('DATABASE_URL', 'mysql+pymysql://root:1234@localhost/taskmanager')
-    if url.startswith('mysql://'):
+    if url and url.startswith('mysql://'):
         url = url.replace('mysql://', 'mysql+pymysql://', 1)
     return url
 
