@@ -3,7 +3,7 @@
     "builder": "NIXPACKS"
   },
   "deploy": {
-    "startCommand": "flask db upgrade && gunicorn app:app",
+    "startCommand": "flask db migrate -m 'tables' && flask db upgrade && gunicorn app:app",
     "restartPolicyType": "ON_FAILURE"
   }
 }
