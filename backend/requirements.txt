@@ -6,3 +6,4 @@ flask-migrate
 pymysql
 bcrypt
 gunicorn
+cryptography
