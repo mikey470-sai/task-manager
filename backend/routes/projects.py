@@ -97,3 +97,13 @@ def remove_member(project_id, member_user_id):
     db.session.delete(to_remove)
     db.session.commit()
     return jsonify({'message': 'Member removed'}), 200
+@projects_bp.route('/<int:project_id>', methods=['DELETE'])
+@jwt_required()
+def delete_project(project_id):
+    user_id = int(get_jwt_identity())
+    project = Project.query.get_or_404(project_id)
+    if project.owner_id != user_id:
+        return jsonify({'error': 'Only owner can delete project'}), 403
+    db.session.delete(project)
+    db.session.commit()
+    return jsonify({'message': 'Project deleted'}), 200

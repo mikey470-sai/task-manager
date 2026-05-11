@@ -47,6 +47,12 @@ export default function ProjectDetail() {
     setTasks(tasks.filter(t => t.id !== taskId));
   };
 
+  const deleteProject = async () => {
+    if (!confirm('Delete this project? This cannot be undone.')) return;
+    await api.delete(`/projects/${id}`);
+    navigate('/projects');
+  };
+
   const addMember = async (e) => {
     e.preventDefault();
     try {
@@ -73,9 +79,20 @@ export default function ProjectDetail() {
         </div>
       </nav>
       <div className="max-w-5xl mx-auto p-6">
-        <h2 className="text-2xl font-bold text-gray-800 mb-1">{project.name}</h2>
-        <p className="text-gray-500 mb-6">{project.description}</p>
+        <div className="flex justify-between items-start mb-6">
+          <div>
+            <h2 className="text-2xl font-bold text-gray-800 mb-1">{project.name}</h2>
+            <p className="text-gray-500">{project.description}</p>
+          </div>
+          {myRole === 'admin' && project.owner_id === user.id && (
+            <button onClick={deleteProject} className="bg-red-500 text-white px-4 py-2 rounded-lg text-sm hover:bg-red-600">
+              Delete Project
+            </button>
+          )}
+        </div>
+
         {error && <p className="text-red-500 text-sm mb-4 bg-red-50 p-3 rounded-lg">{error}</p>}
+
         <div className="bg-white rounded-xl shadow p-5 mb-6">
           <div className="flex justify-between items-center mb-3">
             <h3 className="font-semibold text-gray-700">Team Members</h3>
@@ -100,6 +117,7 @@ export default function ProjectDetail() {
             ))}
           </div>
         </div>
+
         <div className="bg-white rounded-xl shadow p-5">
           <div className="flex justify-between items-center mb-4">
             <h3 className="font-semibold text-gray-700">Tasks ({filteredTasks.length})</h3>
