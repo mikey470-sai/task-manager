@@ -47,4 +47,6 @@ Open http://localhost:5173
 - Role-based access: Admin (full control) / Member (update own tasks)
 - Dashboard with stats: total, done, in-progress, overdue tasks
 - more over manage that task to improve that project
+- this are that project manager to more get it
+  
   
